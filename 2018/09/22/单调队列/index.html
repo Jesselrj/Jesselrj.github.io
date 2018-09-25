@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="今天给大家讲一下单调队列，蒟蒻讲的不好，dalao们请见谅。 首先，让我们来了解一下，单调队列是什么东西(不可以吃)。 介绍单调队列，顾名思义，里面的东西都很单调，也就是保持单调上升或单调下降。这个算法在使用的频率上算少，但是却是很多算法的基础，例如：斜率优化，单调栈等。">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单调队列(入门)">
+<meta property="og:url" content="https://jesselrj.github.io/2018/09/22/单调队列/index.html">
+<meta property="og:site_name" content="Jesselrj&#39;s Blog">
+<meta property="og:description" content="今天给大家讲一下单调队列，蒟蒻讲的不好，dalao们请见谅。 首先，让我们来了解一下，单调队列是什么东西(不可以吃)。 介绍单调队列，顾名思义，里面的东西都很单调，也就是保持单调上升或单调下降。这个算法在使用的频率上算少，但是却是很多算法的基础，例如：斜率优化，单调栈等。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-31T04:30:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单调队列(入门)">
+<meta name="twitter:description" content="今天给大家讲一下单调队列，蒟蒻讲的不好，dalao们请见谅。 首先，让我们来了解一下，单调队列是什么东西(不可以吃)。 介绍单调队列，顾名思义，里面的东西都很单调，也就是保持单调上升或单调下降。这个算法在使用的频率上算少，但是却是很多算法的基础，例如：斜率优化，单调栈等。">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jesselrj's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://jesselrj.github.io/2018/09/22/单调队列/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>单调队列(入门) | Jesselrj's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jesselrj's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">欢迎来到蒟蒻的天地</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jesselrj.github.io/2018/09/22/单调队列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jesselrj">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jesselrj's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">单调队列(入门)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-09-22 20:07:09" itemprop="dateCreated datePublished" datetime="2018-09-22T20:07:09+08:00">2018-09-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-08-31 12:30:18" itemprop="dateModified" datetime="2018-08-31T12:30:18+08:00">2018-08-31</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>今天给大家讲一下单调队列，蒟蒻讲的不好，dalao们请见谅。</p>
+<p>首先，让我们来了解一下，单调队列是什么东西<del>(不可以吃)</del>。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>单调队列，顾名思义，里面的东西都很单调，也就是保持单调上升或单调下降。这个算法在使用的频率上算少，但是却是很多算法的基础，例如：斜率优化，单调栈等。<br><a id="more"></a></p>
+<h2 id="操作原理"><a href="#操作原理" class="headerlink" title="操作原理"></a>操作原理</h2><p>不妨用一个很简单的问题来说明单调队列的速度以及实现的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">不断的向一个数组里塞数，不定期的询问现在数组里的最小值。</span><br></pre></td></tr></table></figure>
+<p>最简单的方法自然是用普通的队列来进行操作啦。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">进队，出队都是O(1)的时间复杂度，而查询最小值则需要O(n)。</span><br></pre></td></tr></table></figure></p>
+<p>其次就是相对比较复杂的<a href="https://www.jeb.website/details/2018/08-25-Heap.html" target="_blank" rel="noopener">堆</a>啦，不会的同学可以点击一下前面那个堆。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">堆顶始终是最小的元素，所以查询的时间复杂度为O(1)。但是，进队和出队都需要进行调整，所以时间复杂度为O(logn)。</span><br></pre></td></tr></table></figure></p>
+<p>最后就是我们的主角：单调队列啦。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">由于单调队列的队头为最小元素，所以每次查询的时间复杂度为O(1)。</span><br><span class="line">   进队和出队麻烦一点：</span><br><span class="line">   </span><br><span class="line">   进队时，将即将进队的元素A从队尾一直往前进行扫描，直到找到一个不大于A的数B，将A放至B后，舍弃A后的所有元素。</span><br><span class="line">   所以，我们可以得到伪代码：</span><br><span class="line">   while(队列不为空&amp;&amp;A&gt;=队尾元素)队尾出队;</span><br><span class="line">从队尾入队；</span><br><span class="line">   </span><br><span class="line">   而出队时，则是将即将出队的元素A从队头一直向后进行扫描，直到找到一个元素B比A后进队，然后舍弃B之前的所有元素。</span><br><span class="line">   同理，我们可以得到伪代码：</span><br><span class="line">   while(A比B先进队)队头出队；</span><br><span class="line">   </span><br><span class="line">   每个元素只进队一次，出队一次，所以均摊后，时间复杂度仍为：O(1)。</span><br><span class="line">   看到这里，也许有些小伙伴会有一个疑问，这不是子序列吗？没错，其实单调队列中的“队列”并不真实存在，存在的只有具有单调性的子序列。</span><br></pre></td></tr></table></figure></p>
+<h2 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h2><p>这里以单调上升为例，单调下降同理，只需改动几个符号即可。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//每m个数中的最小值。 </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> f[<span class="number">1000</span>],a[<span class="number">1000</span>],head=<span class="number">1</span>,tail=<span class="number">0</span>,n,m,xb[<span class="number">1000</span>];<span class="comment">//f[i]为单调队列中第i个位置的元素的值，xb[i]顾名思义xiabiao，也就是第i个位置的元素的下标。 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(f,<span class="number">0</span>,<span class="keyword">sizeof</span>(f));</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;n&gt;&gt;m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">	<span class="keyword">int</span> i=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;m;i++)<span class="comment">//先将前m-1个数入队。 </span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(head&lt;=tail&amp;&amp;f[tail]&gt;=a[i])tail--;</span><br><span class="line">		tail++,f[tail]=a[i],xb[tail]=i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(head&lt;=tail&amp;&amp;f[tail]&gt;=a[i])tail--;<span class="comment">//入队。 </span></span><br><span class="line">		tail++,f[tail]=a[i],xb[tail]=i;</span><br><span class="line">		<span class="keyword">while</span>(xb[head]&lt;i-m+<span class="number">1</span>)head++;<span class="comment">//出队的操作。 </span></span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;f[head]&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="例题：P1886-滑动窗口"><a href="#例题：P1886-滑动窗口" class="headerlink" title="例题：P1886 滑动窗口"></a>例题：<a href="https://www.luogu.org/problemnew/show/P1886#sub" target="_blank" rel="noopener">P1886 滑动窗口</a></h2><h2 id="AC代码如下："><a href="#AC代码如下：" class="headerlink" title="AC代码如下："></a>AC代码如下：</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Max 2000010</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> f[Max],xb[Max],a[Max],n,m,ansmin[Max],ansmax[Max];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getmax</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i=<span class="number">1</span>,head=<span class="number">1</span>,tail=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;m;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(head&lt;=tail&amp;&amp;f[tail]&lt;=a[i])tail--;</span><br><span class="line">		tail++,f[tail]=a[i],xb[tail]=i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(head&lt;=tail&amp;&amp;f[tail]&lt;=a[i])tail--;</span><br><span class="line">		tail++,f[tail]=a[i],xb[tail]=i;</span><br><span class="line">		<span class="keyword">while</span>(xb[head]&lt;i-m+<span class="number">1</span>)head++;</span><br><span class="line">		ansmin[i-m+<span class="number">1</span>]=f[head];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getmin</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i=<span class="number">1</span>,head=<span class="number">1</span>,tail=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;m;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(head&lt;=tail&amp;&amp;f[tail]&gt;=a[i])tail--;</span><br><span class="line">		tail++,f[tail]=a[i],xb[tail]=i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(head&lt;=tail&amp;&amp;f[tail]&gt;=a[i])tail--;</span><br><span class="line">		tail++,f[tail]=a[i],xb[tail]=i;</span><br><span class="line">		<span class="keyword">while</span>(xb[head]&lt;i-m+<span class="number">1</span>)head++;</span><br><span class="line">		ansmax[i-m+<span class="number">1</span>]=f[head];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;n&gt;&gt;m;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">	getmax();</span><br><span class="line">	getmin();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n-m+<span class="number">1</span>;i++)<span class="built_in">cout</span>&lt;&lt;ansmax[i]&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n-m+<span class="number">1</span>;i++)<span class="built_in">cout</span>&lt;&lt;ansmin[i]&lt;&lt;<span class="string">' '</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/22/模拟赛/" rel="next" title="模拟赛">
+                <i class="fa fa-chevron-left"></i> 模拟赛
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/22/ronud-5/" rel="prev" title="onecode 天梯 round#5">
+                onecode 天梯 round#5 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jesselrj</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">Tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作原理"><span class="nav-number">2.</span> <span class="nav-text">操作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现："><span class="nav-number">3.</span> <span class="nav-text">代码实现：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题：P1886-滑动窗口"><span class="nav-number">4.</span> <span class="nav-text">例题：P1886 滑动窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AC代码如下："><span class="nav-number">5.</span> <span class="nav-text">AC代码如下：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jesselrj</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"log":false});</script></body>
+</html>

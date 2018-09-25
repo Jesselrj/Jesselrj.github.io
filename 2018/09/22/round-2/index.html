@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="A : 横冲直撞的车原题链接：http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10127思路：第一眼看到，想到暴力朴素算法，看到数据范围后放弃了。于是另辟蹊径，用了和朴素算法差不多的方法： 用bool(然而怕MLE的我用了bitset)两个数组分别判断每一纵和每一横上有没有棋子然后枚举每一纵和每一横，如果没有棋子对应的ans">
+<meta name="keywords" content="天梯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="onecode 天梯 round#2">
+<meta property="og:url" content="https://jesselrj.github.io/2018/09/22/round-2/index.html">
+<meta property="og:site_name" content="Jesselrj&#39;s Blog">
+<meta property="og:description" content="A : 横冲直撞的车原题链接：http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10127思路：第一眼看到，想到暴力朴素算法，看到数据范围后放弃了。于是另辟蹊径，用了和朴素算法差不多的方法： 用bool(然而怕MLE的我用了bitset)两个数组分别判断每一纵和每一横上有没有棋子然后枚举每一纵和每一横，如果没有棋子对应的ans">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-26T15:36:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="onecode 天梯 round#2">
+<meta name="twitter:description" content="A : 横冲直撞的车原题链接：http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10127思路：第一眼看到，想到暴力朴素算法，看到数据范围后放弃了。于是另辟蹊径，用了和朴素算法差不多的方法： 用bool(然而怕MLE的我用了bitset)两个数组分别判断每一纵和每一横上有没有棋子然后枚举每一纵和每一横，如果没有棋子对应的ans">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jesselrj's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://jesselrj.github.io/2018/09/22/round-2/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>onecode 天梯 round#2 | Jesselrj's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jesselrj's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">欢迎来到蒟蒻的天地</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Startseite</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archiv</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jesselrj.github.io/2018/09/22/round-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jesselrj">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jesselrj's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">onecode 天梯 round#2
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-09-22 20:07:09" itemprop="dateCreated datePublished" datetime="2018-09-22T20:07:09+08:00">2018-09-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-08-26 23:36:01" itemprop="dateModified" datetime="2018-08-26T23:36:01+08:00">2018-08-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="A-横冲直撞的车"><a href="#A-横冲直撞的车" class="headerlink" title="A : 横冲直撞的车"></a>A : 横冲直撞的车</h1><h6 id="原题链接：http-oj-onecode-com-cn-index-php-Ladder-showProblemPage-id-10127"><a href="#原题链接：http-oj-onecode-com-cn-index-php-Ladder-showProblemPage-id-10127" class="headerlink" title="原题链接：http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10127"></a>原题链接：<a href="http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10127" target="_blank" rel="noopener">http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10127</a></h6><p>思路：第一眼看到，想到暴力朴素算法，看到数据范围后放弃了。于是另辟蹊径，用了和朴素算法差不多的方法：</p>
+<h4 id="用bool-然而怕MLE的我用了bitset-两个数组分别判断每一纵和每一横上有没有棋子然后枚举每一纵和每一横，如果没有棋子对应的ans就往上加。"><a href="#用bool-然而怕MLE的我用了bitset-两个数组分别判断每一纵和每一横上有没有棋子然后枚举每一纵和每一横，如果没有棋子对应的ans就往上加。" class="headerlink" title="用bool(然而怕MLE的我用了bitset)两个数组分别判断每一纵和每一横上有没有棋子然后枚举每一纵和每一横，如果没有棋子对应的ans就往上加。"></a>用bool(<del>然而怕MLE的我用了bitset</del>)两个数组分别判断每一纵和每一横上有没有棋子然后枚举每一纵和每一横，如果没有棋子对应的ans就往上加。</h4><a id="more"></a>
+<h3 id="AC代码如下："><a href="#AC代码如下：" class="headerlink" title="AC代码如下："></a>AC代码如下：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bitset&gt;//要用bitset就要打这个库。</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 1000000</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,m,k,ans1,ans2;<span class="comment">//ans1指横向的答案，ans2指纵向的答案。</span></span><br><span class="line"><span class="built_in">bitset</span>&lt;N&gt; a,b;<span class="comment">//a,b分别用来判断每一纵和每一横上有没有棋子。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">()</span><span class="comment">//数据有点大，所以用了读入优化，</span></span></span><br><span class="line"><span class="function">          <span class="comment">//原理很简单，就是模拟读入的过程。</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> s=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> c=getchar();</span><br><span class="line">	<span class="keyword">while</span>(c&lt;<span class="string">'0'</span>||c&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(c==<span class="string">'-'</span>)f=<span class="number">-1</span>;c=getchar();&#125;</span><br><span class="line">	<span class="keyword">while</span>(c&gt;=<span class="string">'0'</span>&amp;&amp;c&lt;=<span class="string">'9'</span>)s=s*<span class="number">10</span>+c-<span class="string">'0'</span>,c=getchar();</span><br><span class="line">	<span class="keyword">return</span> s*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=read(),m=read(),k=read();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>,x,y;i&lt;=k;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		x=read(),y=read();</span><br><span class="line">		a[x]=<span class="number">1</span>;</span><br><span class="line">		b[y]=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="comment">//枚举横向。</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(!a[i])ans1++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d "</span>,ans1);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)<span class="comment">//枚举纵向.</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(!b[i])ans2++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>,ans2);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="B：精英人才"><a href="#B：精英人才" class="headerlink" title="B：精英人才"></a>B：精英人才</h1><h6 id="原题链接：http-oj-onecode-com-cn-index-php-Problem-showProblem-id-10128"><a href="#原题链接：http-oj-onecode-com-cn-index-php-Problem-showProblem-id-10128" class="headerlink" title="原题链接：http://oj.onecode.com.cn/index.php/Problem/showProblem/id/10128"></a>原题链接：<a href="http://oj.onecode.com.cn/index.php/Problem/showProblem/id/10128" target="_blank" rel="noopener">http://oj.onecode.com.cn/index.php/Problem/showProblem/id/10128</a></h6><h4 id="解题思路：看到题目之后，想说一句：“你真是个人才”，想着可以用一个map和一个set还有一个二维数组去维护这道题，map用来储存这个学科的名字是第几个出现，set来判断有没有出现过，二维数组a-i-j-表示第i个学科的第j个人的价值，再用一个一维数组b来储存这个学科的人数，最后sort一下就可以AC此题。"><a href="#解题思路：看到题目之后，想说一句：“你真是个人才”，想着可以用一个map和一个set还有一个二维数组去维护这道题，map用来储存这个学科的名字是第几个出现，set来判断有没有出现过，二维数组a-i-j-表示第i个学科的第j个人的价值，再用一个一维数组b来储存这个学科的人数，最后sort一下就可以AC此题。" class="headerlink" title="解题思路：看到题目之后，想说一句：“你真是个人才”，想着可以用一个map和一个set还有一个二维数组去维护这道题，map用来储存这个学科的名字是第几个出现，set来判断有没有出现过，二维数组a[i][j]表示第i个学科的第j个人的价值，再用一个一维数组b来储存这个学科的人数，最后sort一下就可以AC此题。"></a>解题思路：看到题目之后，<del>想说一句：“你真是个人才”</del>，想着可以用一个map和一个set还有一个二维数组去维护这道题，map用来储存这个学科的名字是第几个出现，set来判断有没有出现过，二维数组a[i][j]表示第i个学科的第j个人的价值，再用一个一维数组b来储存这个学科的人数，最后sort一下就可以AC此题。</h4><h3 id="AC代码如下：-1"><a href="#AC代码如下：-1" class="headerlink" title="AC代码如下："></a>AC代码如下：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;set&gt;//set头文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;//map头文件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 1001<span class="comment">//因为a[10001][10001]会MLE，所以让N=1001；</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,a[N][N],b[N],cnt,ans;<span class="comment">//之前这里的a数组其实是MLE了，</span></span><br><span class="line"><span class="built_in">string</span> s;                  <span class="comment">//但据说测评机有优化，</span></span><br><span class="line"><span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; ok;            <span class="comment">//所以就没有MLE。</span></span><br><span class="line"><span class="built_in">map</span>&lt;<span class="built_in">string</span>,<span class="keyword">int</span>&gt; num;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;<span class="keyword">return</span> a&gt;b;&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">()</span><span class="comment">//依然是那个熟悉的快读。</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> s=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> c=getchar();</span><br><span class="line">	<span class="keyword">while</span>(c&lt;<span class="string">'0'</span>||c&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(c==<span class="string">'-'</span>)f=<span class="number">-1</span>;c=getchar();&#125;</span><br><span class="line">	<span class="keyword">while</span>(c&gt;=<span class="string">'0'</span>&amp;&amp;c&lt;=<span class="string">'9'</span>)s=s*<span class="number">10</span>+c-<span class="string">'0'</span>,c=getchar();</span><br><span class="line">	<span class="keyword">return</span> s*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=read();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>,x;i&lt;=n;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;s;x=read();</span><br><span class="line">		<span class="keyword">if</span>(x&lt;=<span class="number">0</span>)<span class="keyword">continue</span>;</span><br><span class="line">		<span class="keyword">if</span>(ok.count(s))<span class="comment">//查看有没有这个值。</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> t=num[s];</span><br><span class="line">			b[t]++;</span><br><span class="line">			a[t][b[t]]=x;</span><br><span class="line">		&#125;<span class="keyword">else</span><span class="comment">//如果没有将其插入。</span></span><br><span class="line">		&#123;</span><br><span class="line">			ok.insert(s);</span><br><span class="line">			num[s]=++cnt;<span class="comment">//对这个map进行赋值。</span></span><br><span class="line">			<span class="keyword">int</span> t=num[s];<span class="comment">//为了方便将num[s]赋给一个t。</span></span><br><span class="line">			b[t]++;</span><br><span class="line">			a[t][b[t]]=x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=cnt;i++)</span><br><span class="line">	&#123;</span><br><span class="line">    	<span class="comment">//进行一个排序，让大的在前面。</span></span><br><span class="line">		sort(a[i]+<span class="number">1</span>,a[i]+<span class="number">1</span>+b[i],cmp);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=<span class="number">3</span>;j++)ans+=a[i][j];</span><br><span class="line">        <span class="comment">//将前三个数累加起来，如果不足三个数也不怕，</span></span><br><span class="line">        <span class="comment">//因为a数组的初值为0。</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>,ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="C：统计和"><a href="#C：统计和" class="headerlink" title="C：统计和"></a>C：统计和</h1><h6 id="原题链接：http-oj-onecode-com-cn-index-php-Ladder-showProblemPage-id-10129"><a href="#原题链接：http-oj-onecode-com-cn-index-php-Ladder-showProblemPage-id-10129" class="headerlink" title="原题链接：http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10129"></a>原题链接：<a href="http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10129" target="_blank" rel="noopener">http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10129</a></h6><h4 id="解题思路：第一时间想到的是爆搜，然后，看了看数据范围，还坚持着想要剪枝，然后死活是想不出来。于是，我又另辟蹊径ヾ-ﾟ∀ﾟゞ-，用了枚举的方法加上-int128，然后顺利AC。"><a href="#解题思路：第一时间想到的是爆搜，然后，看了看数据范围，还坚持着想要剪枝，然后死活是想不出来。于是，我又另辟蹊径ヾ-ﾟ∀ﾟゞ-，用了枚举的方法加上-int128，然后顺利AC。" class="headerlink" title="解题思路：第一时间想到的是爆搜，然后，看了看数据范围，还坚持着想要剪枝，然后死活是想不出来。于是，我又另辟蹊径ヾ(ﾟ∀ﾟゞ)，用了枚举的方法加上__int128，然后顺利AC。"></a>解题思路：第一时间想到的是爆搜，然后，看了看数据范围，还坚持着想要剪枝，然后死活是想不出来。于是，我又另辟蹊径ヾ(ﾟ∀ﾟゞ)，用了枚举的方法加上__int128，然后顺利AC。</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">至于__int128 和 <span class="keyword">__uint128_t</span>：</span><br><span class="line"></span><br><span class="line"> __int128是一个<span class="number">128</span>位的整形。</span><br><span class="line"> <span class="keyword">__uint128_t</span>是无符号的<span class="number">128</span>位的整形。</span><br><span class="line"></span><br><span class="line"> <span class="keyword">__uint128_t</span>的范围要&gt;__int128</span><br><span class="line">具体范围分别是：</span><br><span class="line"> __int128的上限是<span class="number">2</span>^<span class="number">127</span><span class="number">-1</span>。</span><br><span class="line"> <span class="keyword">__uint128_t</span>的上限是<span class="number">2</span>^<span class="number">128</span><span class="number">-1</span>。</span><br><span class="line"></span><br><span class="line">这些东西可以在luoguIDE上编译运行还有Dev C++ <span class="number">5.11</span>上也可以用，至于其他的IDE，如果可以用，勿喷，没用过...</span><br></pre></td></tr></table></figure>
+<h3 id="AC代码如下：-2"><a href="#AC代码如下：-2" class="headerlink" title="AC代码如下："></a>AC代码如下：</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> bint __int128<span class="comment">//预编译，让bint=__int128</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line">bint n,m,ans;</span><br><span class="line"><span class="function">bint <span class="title">read</span><span class="params">()</span><span class="comment">//毫无波澜的快读。</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> s=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> c=getchar();</span><br><span class="line">	<span class="keyword">while</span>(c&lt;<span class="string">'0'</span>||c&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(c==<span class="string">'-'</span>)f=<span class="number">-1</span>;c=getchar();&#125;</span><br><span class="line">	<span class="keyword">while</span>(c&gt;=<span class="string">'0'</span>&amp;&amp;c&lt;=<span class="string">'9'</span>)s=s*<span class="number">10</span>+c-<span class="string">'0'</span>,c=getchar();</span><br><span class="line">	<span class="keyword">return</span> s*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(bint a)</span><span class="comment">//__int128不支持cout或printf等方式输出,于是，手打了一个模拟输出的过程。</span></span></span><br><span class="line"><span class="function">    <span class="title">if</span><span class="params">(a/<span class="number">10</span>)</span><span class="title">print</span><span class="params">(a/<span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="built_in">putchar</span>(a%<span class="number">10</span>+<span class="number">48</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n=read();m=read();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=n,j=<span class="number">1</span>;i&gt;=<span class="number">1</span>;--i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span>(j+i&lt;=m&amp;&amp;j&lt;i)j++;</span><br><span class="line"><span class="comment">//代码的核心所在。这一句主要是为了让时间复杂度降低，让原本O(m*n^2)的时间复杂度降到O(n*m),同时这也是很好理解的。当j+i&lt;=m时，显然是达不到题目所要求的目标的，所以当它是满足这个条件时就令j++。同理，j&lt;i也就是一个为了防止方案重复的条件。</span></span><br><span class="line">        <span class="keyword">if</span>(i-j&lt;<span class="number">0</span>)<span class="keyword">break</span>;<span class="comment">//这里是一个优化，显然，当i-j已经小于0时，再往下枚举，自然是没有解的了。</span></span><br><span class="line">		ans+=i-j;</span><br><span class="line">	&#125;</span><br><span class="line">	print(ans);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="D：字符串拼接"><a href="#D：字符串拼接" class="headerlink" title="D：字符串拼接"></a>D：字符串拼接</h1><h6 id="原题链接：http-oj-onecode-com-cn-index-php-Ladder-showProblemPage-id-10130"><a href="#原题链接：http-oj-onecode-com-cn-index-php-Ladder-showProblemPage-id-10130" class="headerlink" title="原题链接：http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10130"></a>原题链接：<a href="http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10130" target="_blank" rel="noopener">http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10130</a></h6><h4 id="解题思路：由于数据范围不大，所以直接选择了枚举算法，但是没有1A-原因是漏判了一个很重要的东西，枚举时应该选择长度较长的开始枚举，而我却犯了这个毛病。"><a href="#解题思路：由于数据范围不大，所以直接选择了枚举算法，但是没有1A-原因是漏判了一个很重要的东西，枚举时应该选择长度较长的开始枚举，而我却犯了这个毛病。" class="headerlink" title="解题思路：由于数据范围不大，所以直接选择了枚举算法，但是没有1A,原因是漏判了一个很重要的东西，枚举时应该选择长度较长的开始枚举，而我却犯了这个毛病。"></a>解题思路：由于数据范围不大，所以直接选择了枚举算法，但是没有1A,原因是漏判了一个很重要的东西，枚举时应该选择长度较长的开始枚举，而我却犯了这个毛病。</h4><h3 id="AC代码如下：-3"><a href="#AC代码如下：-3" class="headerlink" title="AC代码如下："></a>AC代码如下：</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ull unsigned long long</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="built_in">string</span> s1,s2,mubiao,ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;s1&gt;&gt;s2&gt;&gt;mubiao;</span><br><span class="line">	<span class="keyword">int</span> l1=s1.size();</span><br><span class="line">	<span class="keyword">int</span> l2=s2.size();</span><br><span class="line">	<span class="keyword">int</span> lm=mubiao.size();</span><br><span class="line">	<span class="keyword">if</span>(l1&lt;l2)<span class="comment">//当s1的长度小于s2的长度时，将它俩交换。</span></span><br><span class="line">	&#123;</span><br><span class="line">		swap(l1,l2);</span><br><span class="line">		swap(s1,s2);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> last=<span class="number">0</span>;<span class="comment">//last表示的是l1的下标。</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;lm;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(s1[last]==mubiao[i])last++;<span class="comment">//如果这个字符和s1[last]一样，就让last++，判断下一个。</span></span><br><span class="line">		<span class="keyword">else</span> ans+=mubiao[i];<span class="comment">//利用string的特性，将这个字符添加进答案中。</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(ans==s2)<span class="built_in">puts</span>(<span class="string">"Yes"</span>);</span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">"No"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AK时间：2018/7/24</p>
+<p>这套题难度：中偏低，但是有许多的坑，<del>我很完美的全掉下去了</del>。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/天梯/" rel="tag"># 天梯</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/22/ronud-5/" rel="next" title="onecode 天梯 round#5">
+                <i class="fa fa-chevron-left"></i> onecode 天梯 round#5
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/22/ronud-4/" rel="prev" title="onecode 天梯 round#4">
+                onecode 天梯 round#4 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jesselrj</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">Tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A-横冲直撞的车"><span class="nav-number">1.</span> <span class="nav-text">A : 横冲直撞的车</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#原题链接：http-oj-onecode-com-cn-index-php-Ladder-showProblemPage-id-10127"><span class="nav-number">1.0.0.0.0.1.</span> <span class="nav-text">原题链接：http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10127</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用bool-然而怕MLE的我用了bitset-两个数组分别判断每一纵和每一横上有没有棋子然后枚举每一纵和每一横，如果没有棋子对应的ans就往上加。"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">用bool(然而怕MLE的我用了bitset)两个数组分别判断每一纵和每一横上有没有棋子然后枚举每一纵和每一横，如果没有棋子对应的ans就往上加。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AC代码如下："><span class="nav-number">1.0.1.</span> <span class="nav-text">AC代码如下：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B：精英人才"><span class="nav-number">2.</span> <span class="nav-text">B：精英人才</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#原题链接：http-oj-onecode-com-cn-index-php-Problem-showProblem-id-10128"><span class="nav-number">2.0.0.0.0.1.</span> <span class="nav-text">原题链接：http://oj.onecode.com.cn/index.php/Problem/showProblem/id/10128</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路：看到题目之后，想说一句：“你真是个人才”，想着可以用一个map和一个set还有一个二维数组去维护这道题，map用来储存这个学科的名字是第几个出现，set来判断有没有出现过，二维数组a-i-j-表示第i个学科的第j个人的价值，再用一个一维数组b来储存这个学科的人数，最后sort一下就可以AC此题。"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">解题思路：看到题目之后，想说一句：“你真是个人才”，想着可以用一个map和一个set还有一个二维数组去维护这道题，map用来储存这个学科的名字是第几个出现，set来判断有没有出现过，二维数组a[i][j]表示第i个学科的第j个人的价值，再用一个一维数组b来储存这个学科的人数，最后sort一下就可以AC此题。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AC代码如下：-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">AC代码如下：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C：统计和"><span class="nav-number">3.</span> <span class="nav-text">C：统计和</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#原题链接：http-oj-onecode-com-cn-index-php-Ladder-showProblemPage-id-10129"><span class="nav-number">3.0.0.0.0.1.</span> <span class="nav-text">原题链接：http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10129</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路：第一时间想到的是爆搜，然后，看了看数据范围，还坚持着想要剪枝，然后死活是想不出来。于是，我又另辟蹊径ヾ-ﾟ∀ﾟゞ-，用了枚举的方法加上-int128，然后顺利AC。"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">解题思路：第一时间想到的是爆搜，然后，看了看数据范围，还坚持着想要剪枝，然后死活是想不出来。于是，我又另辟蹊径ヾ(ﾟ∀ﾟゞ)，用了枚举的方法加上__int128，然后顺利AC。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AC代码如下：-2"><span class="nav-number">3.0.1.</span> <span class="nav-text">AC代码如下：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#D：字符串拼接"><span class="nav-number">4.</span> <span class="nav-text">D：字符串拼接</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#原题链接：http-oj-onecode-com-cn-index-php-Ladder-showProblemPage-id-10130"><span class="nav-number">4.0.0.0.0.1.</span> <span class="nav-text">原题链接：http://oj.onecode.com.cn/index.php/Ladder/showProblemPage/id/10130</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路：由于数据范围不大，所以直接选择了枚举算法，但是没有1A-原因是漏判了一个很重要的东西，枚举时应该选择长度较长的开始枚举，而我却犯了这个毛病。"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">解题思路：由于数据范围不大，所以直接选择了枚举算法，但是没有1A,原因是漏判了一个很重要的东西，枚举时应该选择长度较长的开始枚举，而我却犯了这个毛病。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AC代码如下：-3"><span class="nav-number">4.0.1.</span> <span class="nav-text">AC代码如下：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jesselrj</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.4.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"log":false});</script></body>
+</html>
