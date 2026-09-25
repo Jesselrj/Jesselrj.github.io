@@ -11,25 +11,48 @@
 <meta property="og:title" content="Renjie Liu">
 <meta property="og:description" content="Undergraduate researcher in the HCP Lab at Sun Yat-sen University. Embodied AI, 3D scene understanding and generation.">
 <meta property="og:image" content="https://jesselrj.github.io/avatar.jpg">
+<meta name="color-scheme" content="light dark">
+<script>
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem("theme"); } catch (e) {}
+    if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", t);
+  })();
+</script>
 <style>
   :root {
+    color-scheme: light;
     --bg: #fbfbf9;
     --ink: #1a1a17;
     --muted: #6f6d65;
     --faint: #9b988f;
     --rule: #e5e3db;
     --accent: #8c3b12;
+    --img-dim: 1;
     --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Songti SC", serif;
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
   }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #171614;
+    --ink: #ebe8e0;
+    --muted: #aaa69b;
+    --faint: #7d796f;
+    --rule: #302e2a;
+    --accent: #e39a66;
+    --img-dim: .86;
+  }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #131312;
-      --ink: #e9e7e0;
-      --muted: #9d9a90;
-      --faint: #6f6d66;
-      --rule: #2b2b28;
-      --accent: #d08a5e;
+    :root:not([data-theme]) {
+      color-scheme: dark;
+      --bg: #171614;
+      --ink: #ebe8e0;
+      --muted: #aaa69b;
+      --faint: #7d796f;
+      --rule: #302e2a;
+      --accent: #e39a66;
+      --img-dim: .86;
     }
   }
   * { box-sizing: border-box; }
@@ -40,10 +63,26 @@
     color: var(--ink);
     font: 400 1rem/1.72 var(--sans);
     -webkit-font-smoothing: antialiased;
+    transition: background-color .25s ease, color .25s ease;
   }
   ::selection { background: var(--ink); color: var(--bg); }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
   .page { max-width: 44rem; margin: 0 auto; padding: 6.5rem 1.5rem 4rem; }
+
+  .theme-toggle {
+    position: fixed; top: 1.25rem; right: 1.25rem; z-index: 10;
+    width: 2.1rem; height: 2.1rem; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--bg); color: var(--muted);
+    border: 1px solid var(--rule); border-radius: 50%;
+    cursor: pointer;
+    transition: color .15s, border-color .15s, background-color .25s;
+  }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--faint); }
+  .theme-toggle svg { width: 1rem; height: 1rem; display: block; }
+  .theme-toggle .moon { display: none; }
+  :root[data-theme="dark"] .theme-toggle .sun { display: none; }
+  :root[data-theme="dark"] .theme-toggle .moon { display: block; }
 
   a { color: inherit; text-decoration: none; }
   .ul, .prose a, .quicklinks a, .contact a {
@@ -82,8 +121,10 @@
   .pub-thumb img {
     display: block; width: 100%; height: auto;
     border: 1px solid var(--rule); border-radius: 4px;
+    filter: brightness(var(--img-dim));
+    transition: filter .2s, border-color .2s;
   }
-  .pub-thumb:hover img { border-color: var(--faint); }
+  .pub-thumb:hover img { border-color: var(--faint); filter: none; }
   .pub-title { font: 400 1.06rem/1.5 var(--serif); }
   .pub-authors { margin: .3rem 0 0; font-size: .88rem; color: var(--muted); }
   .pub-authors strong { color: var(--ink); font-weight: 600; }
@@ -117,6 +158,7 @@
 
   @media (max-width: 34rem) {
     .page { padding-top: 4rem; }
+    .theme-toggle { top: .9rem; right: .9rem; }
     .hero { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
     .mark { order: -1; width: 5.5rem; height: 5.5rem; }
     .pub { flex-direction: column; gap: .8rem; }
@@ -126,12 +168,22 @@
   }
   @media print {
     .page { padding: 2rem 0; max-width: none; }
+    .theme-toggle { display: none; }
     a { text-decoration: none; }
     .btn { border-color: var(--rule); }
   }
 </style>
 </head>
 <body>
+<button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+  <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M5.3 18.7l1.5-1.5M17.2 6.8l1.5-1.5"/>
+  </svg>
+  <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
+    <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>
+  </svg>
+</button>
 <div class="page">
 
   <header class="hero">
@@ -216,5 +268,22 @@
   <footer>&copy; 2026 Renjie Liu &middot; Last updated September 2026</footer>
 
 </div>
+<script>
+  (function () {
+    var root = document.documentElement;
+    var btn = document.querySelector(".theme-toggle");
+    var media = matchMedia("(prefers-color-scheme: dark)");
+    btn.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+    media.addEventListener("change", function (e) {
+      var stored = null;
+      try { stored = localStorage.getItem("theme"); } catch (err) {}
+      if (stored !== "light" && stored !== "dark") root.setAttribute("data-theme", e.matches ? "dark" : "light");
+    });
+  })();
+</script>
 </body>
 </html>
