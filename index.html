@@ -18,6 +18,7 @@
     try { t = localStorage.getItem("theme"); } catch (e) {}
     if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     document.documentElement.setAttribute("data-theme", t);
+    document.documentElement.classList.add("js");
   })();
 </script>
 <style>
@@ -83,6 +84,29 @@
   .theme-toggle .moon { display: none; }
   :root[data-theme="dark"] .theme-toggle .sun { display: none; }
   :root[data-theme="dark"] .theme-toggle .moon { display: block; }
+  .theme-toggle svg { transition: transform .35s ease; }
+  .theme-toggle:hover svg { transform: rotate(18deg); }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .js .hero-text > * { animation: rise .65s cubic-bezier(.22, .61, .36, 1) backwards; }
+    .js .hero-text > *:nth-child(1) { animation-delay: .05s; }
+    .js .hero-text > *:nth-child(2) { animation-delay: .13s; }
+    .js .hero-text > *:nth-child(3) { animation-delay: .21s; }
+    .js .hero-text > *:nth-child(4) { animation-delay: .29s; }
+    .js .hero > .mark { animation: rise .65s cubic-bezier(.22, .61, .36, 1) .15s backwards; }
+    .js .reveal {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity .65s ease, transform .65s cubic-bezier(.22, .61, .36, 1);
+    }
+    .js .reveal.in { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
 
   a { color: inherit; text-decoration: none; }
   .ul, .prose a, .quicklinks a, .contact a {
@@ -90,6 +114,7 @@
     text-decoration-color: var(--rule);
     text-underline-offset: .22em;
     text-decoration-thickness: 1px;
+    transition: color .18s ease, text-decoration-color .18s ease;
   }
   .prose a:hover, .quicklinks a:hover, .contact a:hover { color: var(--accent); text-decoration-color: var(--accent); }
 
@@ -118,13 +143,18 @@
   .pub { display: flex; align-items: flex-start; gap: 1.4rem; margin-bottom: 2.4rem; }
   .pub:last-child { margin-bottom: 0; }
   .pub-thumb { flex: 0 0 10rem; }
+  .pub-thumb {
+    flex: 0 0 10rem; display: block;
+    border: 1px solid var(--rule); border-radius: 4px; overflow: hidden;
+    transition: border-color .2s;
+  }
+  .pub-thumb:hover { border-color: var(--faint); }
   .pub-thumb img {
     display: block; width: 100%; height: auto;
-    border: 1px solid var(--rule); border-radius: 4px;
     filter: brightness(var(--img-dim));
-    transition: filter .2s, border-color .2s;
+    transition: filter .3s ease, transform .45s cubic-bezier(.22, .61, .36, 1);
   }
-  .pub-thumb:hover img { border-color: var(--faint); filter: none; }
+  .pub-thumb:hover img { border-color: var(--faint); filter: none; transform: scale(1.03); }
   .pub-title { font: 400 1.06rem/1.5 var(--serif); }
   .pub-authors { margin: .3rem 0 0; font-size: .88rem; color: var(--muted); }
   .pub-authors strong { color: var(--ink); font-weight: 600; }
@@ -140,9 +170,10 @@
     display: inline-block; padding: .22rem .85rem; margin-right: .45rem;
     border: 1px solid var(--rule); border-radius: 3px;
     font-size: .8rem; font-weight: 500; letter-spacing: .01em;
-    transition: background .15s, color .15s, border-color .15s;
+    transition: background .15s, color .15s, border-color .15s, transform .15s;
   }
-  .btn:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .btn:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
 
   .edu { margin-bottom: 1.5rem; }
   .edu:last-child { margin-bottom: 0; }
@@ -199,7 +230,7 @@
     <img class="mark" src="avatar.jpg" alt="Renjie Liu">
   </header>
 
-  <section>
+  <section class="reveal">
     <h2>About</h2>
     <p class="prose">
       I am a final-year undergraduate at Sun Yat-sen University and a research assistant in the
@@ -208,22 +239,8 @@
     </p>
   </section>
 
-  <section>
+  <section class="reveal">
     <h2>Publications</h2>
-    <div class="pub">
-      <a class="pub-thumb" href="https://arxiv.org/abs/2603.27084">
-        <img src="teaser_sceneexpander.png" alt="SceneExpander overview" loading="lazy">
-      </a>
-      <div class="pub-body">
-        <div class="pub-title">SceneExpander: Text-Guided 3D Scene Expansion via Free-Form View Insertion</div>
-        <p class="pub-authors">Zijian He, <strong>Renjie Liu</strong>, Yihao Wang, Weizhi Zhong, Huan Yang, Kun Gai, Guangrun Wang, Guanbin Li</p>
-        <p class="pub-meta"><span class="tag">Under review</span> &nbsp;2026</p>
-        <p class="pub-links">
-          <a class="btn" href="https://arxiv.org/abs/2603.27084">arXiv</a>
-          <a class="btn" href="https://arxiv.org/pdf/2603.27084">PDF</a>
-        </p>
-      </div>
-    </div>
     <div class="pub">
       <a class="pub-thumb" href="https://arxiv.org/abs/2608.06836">
         <img src="teaser_gopi.png" alt="GOPI overview" loading="lazy">
@@ -238,9 +255,23 @@
         </p>
       </div>
     </div>
+    <div class="pub">
+      <a class="pub-thumb" href="https://arxiv.org/abs/2603.27084">
+        <img src="teaser_sceneexpander.png" alt="SceneExpander overview" loading="lazy">
+      </a>
+      <div class="pub-body">
+        <div class="pub-title">SceneExpander: Text-Guided 3D Scene Expansion via Free-Form View Insertion</div>
+        <p class="pub-authors">Zijian He, <strong>Renjie Liu</strong>, Yihao Wang, Weizhi Zhong, Huan Yang, Kun Gai, Guangrun Wang, Guanbin Li</p>
+        <p class="pub-meta"><span class="tag">Under review</span> &nbsp;2026</p>
+        <p class="pub-links">
+          <a class="btn" href="https://arxiv.org/abs/2603.27084">arXiv</a>
+          <a class="btn" href="https://arxiv.org/pdf/2603.27084">PDF</a>
+        </p>
+      </div>
+    </div>
   </section>
 
-  <section>
+  <section class="reveal">
     <h2>Education</h2>
     <div class="edu">
       <div class="edu-head">
@@ -258,7 +289,7 @@
     </div>
   </section>
 
-  <section class="contact">
+  <section class="contact reveal">
     <h2>Contact</h2>
     <p><span class="label">Email</span><a href="mailto:Liurj26@mail2.sysu.edu.cn">Liurj26@mail2.sysu.edu.cn</a></p>
     <p><span class="label">GitHub</span><a href="https://github.com/Jesselrj">github.com/Jesselrj</a></p>
@@ -283,6 +314,21 @@
       try { stored = localStorage.getItem("theme"); } catch (err) {}
       if (stored !== "light" && stored !== "dark") root.setAttribute("data-theme", e.matches ? "dark" : "light");
     });
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) { entries[i].target.classList.add("in"); io.unobserve(entries[i].target); }
+        }
+      }, { rootMargin: "0px 0px -10% 0px" });
+      document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+      window.addEventListener("scroll", function () {
+        document.querySelectorAll(".reveal:not(.in)").forEach(function (el) {
+          if (el.getBoundingClientRect().top < 0) { el.classList.add("in"); io.unobserve(el); }
+        });
+      }, { passive: true });
+    } else {
+      document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
+    }
   })();
 </script>
 </body>
